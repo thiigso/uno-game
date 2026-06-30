@@ -16,6 +16,18 @@ public class App {
         
         gerenciadorJogo.mostrarBaralho();
         
+        gerenciadorJogo.iniciarPartida();
+
+        gerenciadorJogo.mostrarBaralho();
+
+        gerenciadorJogo.mostrarMao("Jogador 1");
+        gerenciadorJogo.mostrarMao("bot 1");
+        gerenciadorJogo.mostrarMao("bot 2");
+        gerenciadorJogo.mostrarMao("bot 3");
+
+        gerenciadorJogo.mostrarBaralho();
+        
+        
         
     }
     
