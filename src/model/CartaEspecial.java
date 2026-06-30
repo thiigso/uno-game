@@ -1,4 +1,4 @@
-package FuncionamentoInterno;
+package model;
 
 
 public class CartaEspecial extends Carta

@@ -1,4 +1,4 @@
-package FuncionamentoInterno;
+package model;
 
 
 public abstract class Carta {

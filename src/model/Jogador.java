@@ -1,7 +1,7 @@
 
-package FuncionamentoInterno;
+package model;
 
 
 public class Jogador {
-    private nome String
+    private String nome;
 }

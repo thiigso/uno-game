@@ -1,5 +1,5 @@
 
-package Interface.java;
+package view;
 
 public class Janela extends javax.swing.JFrame {
     
@@ -50,13 +50,13 @@ public class Janela extends javax.swing.JFrame {
 
         jButton7.setText("carta");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/amarelo (4).png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/amarelo (4).png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

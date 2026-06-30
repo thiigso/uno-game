@@ -1,5 +1,5 @@
 
-package FuncionamentoInterno;
+package model;
 
 public class CartaNumerada extends Carta{
     private int numero;

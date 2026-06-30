@@ -1,4 +1,4 @@
-package Jogo;
+package controller;
 
 
 public class Jogo {
