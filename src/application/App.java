@@ -3,9 +3,11 @@ package application;
 
 import controller.Controller;
 /**
- *
+ * @author André Lopes Alves Pereira Machado
+ * @author Augusto de Morais Lemos
+ * @author Daniel Santos Carmo
  * @author Thiago Gabriel da Silva Oliveira
- * @author Coloquem os nomes aqui!
+ 
  */
 
 public class App {
