@@ -1,17 +1,18 @@
 
 package view;
 
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import model.*;
+
 public class Janela extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Janela.class.getName());
-
-    /**
-     * Creates new form Janela
-     */
     public Janela() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,31 +33,41 @@ public class Janela extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("carta");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("carta");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("carta");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jButton4.setText("carta");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jButton5.setText("carta");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jButton6.setText("carta");
+        jButton6.addActionListener(this::jButton6ActionPerformed);
 
         jButton7.setText("carta");
+        jButton7.addActionListener(this::jButton7ActionPerformed);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/amarelo (4).png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/amarelo (4).png"))); // NOI18N
+
+        jLabel5.setText("carta jogada");
+        jLabel5.setName("cartaJogada"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,10 +85,15 @@ public class Janela extends javax.swing.JFrame {
                         .addGap(361, 361, 361)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
+                        .addGap(426, 426, 426)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(157, 157, 157)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -91,7 +107,7 @@ public class Janela extends javax.swing.JFrame {
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,11 +116,17 @@ public class Janela extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(119, 119, 119)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel3))
+                    .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(153, 153, 153))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,20 +135,123 @@ public class Janela extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40))
+                .addGap(32, 32, 32))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void inicializarBotoes(ArrayList<Carta> mao){//logica do model precisa garantir que a mao recebida seja a do humano
+        
+        JButton[] botoes = {jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton7};
+        int i=0;
+        for(Carta carta : mao){
+            String nomeArqCarta="";
+            
+            if(carta instanceof CartaNumerada cartaNumerada)
+                nomeArqCarta = carta.getCor() + cartaNumerada.getNumero();
+            if(carta instanceof CartaEspecial cartaEspecial)
+                nomeArqCarta = carta.getCor() + cartaEspecial.getEfeito();
+            
+            botoes[i].setName(nomeArqCarta);
+            
+            ImageIcon icon = new ImageIcon(getClass().getResource("/resources/sprites/"+ nomeArqCarta +".png"));
+            botoes[i].setIcon(icon);
+            
+            i++;           
+        }
+    }
+    
+    
+    private Carta cartaEscolhida;
+    private void setCartaEscolhida(java.awt.event.ActionEvent evt){
+        //esse método serve para obter informações sobre a carta a partir do nome do botão, para criar a carta
+        
+        JButton botao = (JButton)evt.getSource();
+        String nomeCarta = botao.getName();
+        
+        JOptionPane.showMessageDialog(botao, nomeCarta);
+        
+                
+        char penultimoChar = nomeCarta.charAt(nomeCarta.length()-2); 
+        
+        if(!(nomeCarta.contains("Preto"))){//se NÃO for preto
+            if(penultimoChar != '1'){ //Se a carta não é preta e o penultimo char não é 1, então ela não é especial (cartas especiais com cor vão de 10 a 12, olhar os nomes dos pngs)
+                
+                String cor = nomeCarta.substring(0, nomeCarta.length()-1);
+                
+                //pega o numero no ultimo char
+                int numero = (int)nomeCarta.charAt(nomeCarta.length()-1)-48; //ao converter char pra int, ele devolve o valor ASCII. Exemplo: 3 é igual a 51 em ASCII, então faz-se: 51-48 = 3  
+                
+                cartaEscolhida = new CartaNumerada(cor, "Numerada", numero);
+            }else{
+                String cor = nomeCarta.substring(0, nomeCarta.length()-2);
+                
+                String efeito="";
+                
+                //saber o último algarismo do nome do arquivo pra saber qual o efeito
+                //analisa-se os arquivos com número de 10 a 12, como ja sabemos que penultimoChar==1, busca-se os caracteres algarismos 0, 1 ou 2
+                char ultimoCaractere = nomeCarta.charAt(nomeCarta.length()-1);
+                
+                if(ultimoCaractere == '0')
+                    efeito = "Mais2";
+                if(ultimoCaractere == '1')
+                    efeito = "MudaSentido";
+                if(ultimoCaractere == '2')
+                    efeito = "Bloquear";
+                
+                cartaEscolhida = new CartaEspecial(cor, "Especial", efeito);
+            }
+        }
+    }
+    public Carta getCartaEscolhida(){
+        //deve ser chamado quando se deseja obter a carta que o jogador clicou
+        return cartaEscolhida;
+    }
+    
+    public void atualizarPilha(Carta carta){
+        String nomeDoArquivo="";
+        
+        //pega os dados da carta pra formar o nome do png correspondente
+        if(carta instanceof CartaNumerada cartaNumerada)
+                nomeDoArquivo = carta.getCor() + cartaNumerada.getNumero();
+        if(carta instanceof CartaEspecial cartaEspecial)
+                nomeDoArquivo = carta.getCor() + cartaEspecial.getEfeito();
+        
+        ImageIcon icon = new ImageIcon(getClass().getResource("/resources/sprites/"+ nomeDoArquivo +".png"));
+        jLabel5.setIcon(icon);        
+    }
+    
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        setCartaEscolhida(evt);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    
-    private void handlerCartaJogada(java.awt.event.ActionEvent evt){
-        
-    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        setCartaEscolhida(evt);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        setCartaEscolhida(evt);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        setCartaEscolhida(evt);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        setCartaEscolhida(evt);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        setCartaEscolhida(evt);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        setCartaEscolhida(evt);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -140,5 +265,6 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
