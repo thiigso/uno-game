@@ -2,15 +2,18 @@
 package application;
 
 import controller.Controller;
+import java.net.URL;
 /**
  *
  * @author Thiago Gabriel da Silva Oliveira
+ * @author Augusto de Morais Lemos
  * @author Coloquem os nomes aqui!
  */
 
 public class App {
     
     public static void main(String[] args) {
+        
         System.out.println("[System] Iniciando o Uno");
         Controller gerenciadorJogo = new Controller();
         
@@ -26,7 +29,6 @@ public class App {
         gerenciadorJogo.mostrarMao("bot 3");
 
         gerenciadorJogo.mostrarBaralho();
-        
         
         
     }
