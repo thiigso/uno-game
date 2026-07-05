@@ -75,5 +75,9 @@ public class Baralho {
     public void setCartas(ArrayList<Carta> cartas) {
         this.cartas = cartas;
     }
+    
+    public void adicionarCarta(Carta carta){
+        this.cartas.add(carta);
+    }
 
 }
