@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import view.Janela;
-
 public class Mesa {
 
     private Baralho baralho;
@@ -57,16 +55,6 @@ public class Mesa {
 
     public void setBaralho(Baralho baralho) {
         this.baralho = baralho;
-    }
-
-
-    public Janela getJanela() {
-        return janela;
-    }
-
-
-    public void setJanela(Janela janela) {
-        this.janela = janela;
     }
 
     public int getTurnoAtual() {

@@ -58,13 +58,13 @@ public class Janela extends javax.swing.JFrame {
         jButton7.setText("carta");
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/cartaOculta.jpg"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/cartas uno/amarelo (4).png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/amarelo (4).png"))); // NOI18N
 
         jLabel5.setText("carta jogada");
         jLabel5.setName("cartaJogada"); // NOI18N

@@ -132,28 +132,28 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Interface/cartas uno/cartaOculta.jpg"/>
+          <Image iconType="3" name="/resources/sprites/cartaOculta.jpg"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Interface/cartas uno/cartaOculta.jpg"/>
+          <Image iconType="3" name="/resources/sprites/cartaOculta.jpg"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Interface/cartas uno/cartaOculta.jpg"/>
+          <Image iconType="3" name="/resources/sprites/cartaOculta.jpg"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Interface/cartas uno/amarelo (4).png"/>
+          <Image iconType="3" name="/resources/sprites/amarelo (4).png"/>
         </Property>
       </Properties>
     </Component>
