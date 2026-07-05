@@ -97,8 +97,8 @@ public class Mesa {
         return sentidoHorario;
     }
 
-    public void setSentidoHorario(boolean sentidoHorario) {
-        this.sentidoHorario = sentidoHorario;
+    public void setSentidoHorario() {
+        this.sentidoHorario = !(this.sentidoHorario);
     }
 
     
