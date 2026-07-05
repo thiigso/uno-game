@@ -4,10 +4,10 @@ package application;
 import controller.Controller;
 import java.net.URL;
 /**
- * @author André Lopes Alves Pereira Machado
+ *
+ * @author Thiago Gabriel da Silva Oliveira
  * @author Augusto de Morais Lemos
- * @author Daniel Santos Carmo
- * @author Thiago Gabriel da Silva Oliveira 
+ * @author Coloquem os nomes aqui!
  */
 
 public class App {
