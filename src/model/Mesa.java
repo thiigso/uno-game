@@ -99,7 +99,7 @@ public class Mesa {
         
         do{
             Carta primeiraCarta = baralho.comprar();
-            switch (primeiraCarta) {
+            switch (primeiraCarta){
                 case null -> {
                     System.out.println("[MESA] Baralho vazio ao tentar iniciar partida.");
                     break buscarCarta;
@@ -216,6 +216,4 @@ public class Mesa {
     }
 
     
-    
-
 }
