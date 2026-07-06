@@ -2,7 +2,7 @@
 package application;
 
 import controller.Controller;
-import java.net.URL;
+
 /**
  * @author André Lopes Alves Pereira Machado
  * @author Augusto de Morais Lemos
