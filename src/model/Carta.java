@@ -9,8 +9,6 @@ public abstract class Carta {
         this.cor = cor;
         this.tipo = tipo;
     }
-    
-    public abstract String aplicarEfeito();
 
     public String getCor() {
         return cor;
