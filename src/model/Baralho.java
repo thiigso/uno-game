@@ -54,6 +54,8 @@ public class Baralho {
     e assegura um embaralhamento imparcial onde todas as permutações possíveis do baralho têm exatamente a mesma
     probabilidade de ocorrência.
     */
+
+    
     public void embaralhar(){
         Collections.shuffle(cartas);
     }
