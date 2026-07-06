@@ -60,15 +60,75 @@ public class Mesa {
         }
     }
 
-    public boolean verificarJogada(Carta cartaJogada){
-        
-        if(cartaJogada.getCor().equals(cartaAtual.getCor()) || cartaJogada.getTipo().equals(cartaAtual.getTipo())){
-                System.out.println("[MESA] Jogada válida! Carta jogada: " + cartaJogada.getCor() + " " + cartaJogada.getTipo());
+    public boolean verificarJogada(Carta cartaJogada) {//espero que agora funcione como planejadokkk
+
+    // 1. Existe penalidade ativa?
+    if (penalidadeCompra > 0) {
+
+        // Apenas cartas especiais podem responder a uma penalidade
+        if (!(cartaJogada instanceof CartaEspecial cartaEspecial)) {
+            return false;
+        }
+
+        String efeito = cartaEspecial.getEfeito();
+
+        // Carta da mesa é +2
+        if (cartaAtual instanceof CartaEspecial cartaAtualEspecial &&
+            cartaAtualEspecial.getEfeito().equals("Mais2")) {
+
+            if (efeito.equals("Mais2")) {
+                penalidadeCompra += 2;
                 return true;
-            } else {
-                System.out.println("[MESA] Jogada inválida! Carta jogada: " + cartaJogada.getCor() + " " + cartaJogada.getTipo());
-                return false;
             }
+
+            if (efeito.equals("Mais4")) {
+                penalidadeCompra += 4;
+                return true;
+            }
+
+            return false;
+        }
+
+        // Carta da mesa é +4
+        if (cartaAtual instanceof CartaEspecial cartaAtualEspecial &&
+            cartaAtualEspecial.getEfeito().equals("Mais4")) {
+
+            // Apenas outro +4 pode responder
+            if (efeito.equals("Mais4")) {
+                penalidadeCompra += 4;
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    // 2. Sem penalidade: verifica regras normais
+
+    // mesma cor
+    if (cartaJogada.getCor().equals(cartaAtual.getCor()))
+        return true;
+
+    // duas cartas numéricas
+    if (cartaJogada instanceof CartaNumerada jogada &&
+        cartaAtual instanceof CartaNumerada atual){
+
+        return jogada.getNumero() == atual.getNumero();
+    }
+
+    // duas cartas especiais
+    if (cartaJogada instanceof CartaEspecial jogada &&
+        cartaAtual instanceof CartaEspecial atual){
+
+        return jogada.getEfeito().equals(atual.getEfeito());
+    }
+
+    // +4 e MudarCor sempre podem ser jogados
+    if (cartaJogada instanceof CartaEspecial jogada){
+        return jogada.getEfeito().equals("Mais4") || jogada.getEfeito().equals("MudarCor");
+    }
+
+    return false;
     }
 
     private void instanciarJogadores(){
@@ -191,7 +251,7 @@ public class Mesa {
         return sentidoHorario;
     }
 
-    public void setSentidoHorario() {
+    public void inverteSentido() {
         this.sentidoHorario = !(this.sentidoHorario);
     }
 
@@ -213,9 +273,6 @@ public class Mesa {
 
     public void setSentidoHorario(boolean sentidoHorario) {
         this.sentidoHorario = sentidoHorario;
-    }
-
-    
-    
+    }   
 
 }
