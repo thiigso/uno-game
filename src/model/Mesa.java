@@ -24,21 +24,31 @@ public class Mesa {
     }
 
     public void prepararMesa(){
-        boolean cartaValidaPraInicio = false;
-        ArrayList<Carta> cartasInvalidasParaInicio = new ArrayList<>(); 
-        //Cartas especiais não podem iniciar a partida 
-        //por isso são armazenadas temporariamente e devolvidas ao baralho
         
         // Adiciona jogadores à mesa
-        jogadores.add(new JogadorHumano("Jogador 1"));
-        jogadores.add(new JogadorBot("Bot 1"));
-        jogadores.add(new JogadorBot("Bot 2"));
-        jogadores.add(new JogadorBot("Bot 3"));
+        instanciarJogadores();
 
         // Embaralha o baralho
         baralho.embaralhar();
 
         // Distribui cartas para os jogadores
+        distribuiCartasAosJogadores();
+
+        // Coloca a primeira carta na pilha de descarte
+        pegarPrimeiraCartaPraIniciar();
+        
+        // Após devolver as cartas que eram invalidas para o baralho precisamos embaralhar novamente
+        baralho.embaralhar();       
+    }
+
+    private void instanciarJogadores(){
+        jogadores.add(new JogadorHumano("Jogador 1"));
+        jogadores.add(new JogadorBot("Bot 1"));
+        jogadores.add(new JogadorBot("Bot 2"));
+        jogadores.add(new JogadorBot("Bot 3"));
+    }
+    
+    private void distribuiCartasAosJogadores(){
         for (int i = 0; i < 7; i++) {
             for (Jogador jogador : jogadores) {
                 Carta carta = baralho.comprar();
@@ -48,8 +58,13 @@ public class Mesa {
                 }
             }
         }
-
-        // Coloca a primeira carta na pilha de descarte
+    }
+    
+    private void pegarPrimeiraCartaPraIniciar(){         
+        //Cartas especiais não podem iniciar a partida 
+        //por isso são armazenadas temporariamente e devolvidas ao baralho
+        boolean cartaValidaPraInicio = false;
+        ArrayList<Carta> cartasInvalidasParaInicio = new ArrayList<>(); 
         do{
             Carta primeiraCarta = baralho.comprar();
             if(primeiraCarta instanceof CartaNumerada){
@@ -66,12 +81,8 @@ public class Mesa {
             this.baralho.adicionarCarta(cartasInvalidasParaInicio.getFirst());
             cartasInvalidasParaInicio.removeFirst();
         }
-        
-        //após devolver as cartas que eram invalidas para o baralho precisamos embaralhar novamente
-        baralho.embaralhar();       
     }
-
-
+    
     public Baralho getBaralho() {
         return baralho;
     }
