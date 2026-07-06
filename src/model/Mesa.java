@@ -95,30 +95,36 @@ public class Mesa {
         //por isso são armazenadas temporariamente e devolvidas ao baralho
         boolean cartaValidaPraInicio = false;
         ArrayList<Carta> cartasInvalidasParaInicio = new ArrayList<>(); 
+        buscarCarta:
+        
         do{
             Carta primeiraCarta = baralho.comprar();
-            if(primeiraCarta == null) {
-                System.out.println("[MESA] Baralho vazio ao tentar iniciar partida.");
-                break;
-            }
-            if(primeiraCarta instanceof CartaNumerada){
-                cartaValidaPraInicio = true;
-                this.cartaAtual = primeiraCarta;
-                this.pilhaDescarte.add(primeiraCarta);
-                System.out.println("[MESA] Primeira carta da partida: " + cartaAtual.getCor() + " " + cartaAtual.getTipo() + " " + ((CartaNumerada) cartaAtual).getNumero());
-            } else if (primeiraCarta instanceof CartaEspecial){
-                System.out.println("[MESA] Encontrou carta invalida!!: " + primeiraCarta.getCor() + " " + primeiraCarta.getTipo() + " " + ((CartaEspecial) primeiraCarta).getEfeito());
-                cartasInvalidasParaInicio.add(primeiraCarta);
-            } else {
-                System.out.println("[MESA] Carta desconhecida encontrada no início: " + primeiraCarta.getCor() + " " + primeiraCarta.getTipo());
-                cartasInvalidasParaInicio.add(primeiraCarta);
+            switch (primeiraCarta) {
+                case null -> {
+                    System.out.println("[MESA] Baralho vazio ao tentar iniciar partida.");
+                    break buscarCarta;
+                }
+                case CartaNumerada cartaNumerada -> {
+                    cartaValidaPraInicio = true;
+                    this.cartaAtual = primeiraCarta;
+                    this.pilhaDescarte.add(primeiraCarta);
+                    System.out.println("[MESA] Primeira carta da partida: " + cartaAtual.getCor() + " " + cartaAtual.getTipo() + " " + cartaNumerada.getNumero());
+                }
+                case CartaEspecial cartaEspecial -> {
+                    System.out.println("[MESA] Encontrou carta invalida!!: " + primeiraCarta.getCor() + " " + primeiraCarta.getTipo() + " " + cartaEspecial.getEfeito());
+                    cartasInvalidasParaInicio.add(primeiraCarta);
+                }
+                default -> {
+                    System.out.println("[MESA] Carta desconhecida encontrada no início: " + primeiraCarta.getCor() + " " + primeiraCarta.getTipo());
+                    cartasInvalidasParaInicio.add(primeiraCarta);
+                }
             }
         }while(!cartaValidaPraInicio);
         
         //Agora que já foi encontrada uma carta válida pra começar temos que devolver as invalidas ao baralho
         while(!cartasInvalidasParaInicio.isEmpty()){
-            this.baralho.adicionarCarta(cartasInvalidasParaInicio.getFirst());
-            cartasInvalidasParaInicio.removeFirst();
+            this.baralho.adicionarCarta(cartasInvalidasParaInicio.get(0));
+            cartasInvalidasParaInicio.remove(0);
         }
     }
 
@@ -127,8 +133,8 @@ public class Mesa {
         System.out.println("[MESA] Baralho:");
         for(int i = baralho.getCartas().size() - 1; i >= 0; i--) {
             switch (baralho.getCartas().get(i)) {
-                case model.CartaNumerada cartaNumerada -> System.out.println("Carta "+ (i+1) + " " + baralho.getCartas().get(i).getCor() + " " + baralho.getCartas().get(i).getTipo() + " " + cartaNumerada.getNumero());
-                case model.CartaEspecial cartaEspecial -> System.out.println("Carta "+ (i+1) + " " + baralho.getCartas().get(i).getCor() + " " + baralho.getCartas().get(i).getTipo() +" " + cartaEspecial.getEfeito());
+                case model.CartaNumerada cartaNumerada -> System.out.println("Carta "+ (i+1) + " " + cartaNumerada.getCor() + " " + cartaNumerada.getTipo() + " " + cartaNumerada.getNumero());
+                case model.CartaEspecial cartaEspecial -> System.out.println("Carta "+ (i+1) + " " + cartaEspecial.getCor() + " " + cartaEspecial.getTipo() +" " + cartaEspecial.getEfeito());
                 default -> {
                 }
             }
@@ -138,9 +144,9 @@ public class Mesa {
     public void mostrarPilhaDescarte() {
         System.out.println("[MESA] Pilha Descarte:");
         for(int i = pilhaDescarte.size() - 1; i >= 0; i--) {
-            switch (baralho.getCartas().get(i)) {
-                case model.CartaNumerada cartaNumerada -> System.out.println("Carta "+ (i+1) + " " + pilhaDescarte.get(i).getCor() + " " + pilhaDescarte.get(i).getTipo() + " " + cartaNumerada.getNumero());
-                case model.CartaEspecial cartaEspecial -> System.out.println("Carta "+ (i+1) + " " + pilhaDescarte.get(i).getCor() + " " + pilhaDescarte.get(i).getTipo() +" " + cartaEspecial.getEfeito());
+            switch (pilhaDescarte.get(i)) {
+                case model.CartaNumerada cartaNumerada -> System.out.println("Carta "+ (i+1) + " " + cartaNumerada.getCor() + " " + cartaNumerada.getTipo() + " " + cartaNumerada.getNumero());
+                case model.CartaEspecial cartaEspecial -> System.out.println("Carta "+ (i+1) + " " + cartaEspecial.getCor() + " " + cartaEspecial.getTipo() +" " + cartaEspecial.getEfeito());
                 default -> {
                 }
             }

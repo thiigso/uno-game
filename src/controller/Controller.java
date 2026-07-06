@@ -4,6 +4,7 @@ import model.Carta;
 import model.CartaEspecial;
 import model.Jogador;
 import model.JogadorBot;
+import model.JogadorHumano;
 import model.Mesa;
 import view.Janela;
 
@@ -41,10 +42,8 @@ public class Controller {
             mesa.getPilhaDescarte().add(cartaSelecionada);
             mesa.setCartaAtual(cartaSelecionada);
 
-            if (cartaSelecionada instanceof model.CartaEspecial) {
-
-                ((CartaEspecial) cartaSelecionada).aplicarEfeito();
-
+            if (cartaSelecionada instanceof CartaEspecial cartaEspecial) {
+                cartaEspecial.aplicarEfeito();
             }
 
             //janela.atualizarJanela();
@@ -66,11 +65,11 @@ public class Controller {
         Jogador jogadorAtual = mesa.getJogadores().get(mesa.getTurnoAtual());
         System.out.println("[CONTROLLER] É a vez do jogador: " + jogadorAtual.getNome());
 
-        if(jogadorAtual instanceof model.JogadorBot){
+        if (jogadorAtual instanceof JogadorBot jogadorBot) {
             // Lógica para o bot jogar
-            System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " é um bot e está jogando automaticamente.");
+            System.out.println("[CONTROLLER] O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
 
-            Carta cartaEscolhidaBot = ((JogadorBot) jogadorAtual).escolherCartaParaJogar(mesa.getCartaAtual());
+            Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa.getCartaAtual());
             
             if(cartaEscolhidaBot != null){
                 realizarJogada(jogadorAtual, cartaEscolhidaBot);
@@ -91,6 +90,28 @@ public class Controller {
         }
 
     }
+
+    public void processarCliqueInterface(int indiceDaCartaNaMao) {
+        // Descobre quem é o jogador da vez
+        Jogador jogadorDaVez = mesa.getJogadores().get(mesa.getTurnoAtual());
+
+        // Só aceita o clique se realmente for a vez do humano
+        if (jogadorDaVez instanceof JogadorHumano) {
+
+            // Pega a carta específica da mão baseada no índice do botão
+            if (indiceDaCartaNaMao >= 0 && indiceDaCartaNaMao < jogadorDaVez.getMao().size()) {
+                Carta cartaClicada = jogadorDaVez.getMao().get(indiceDaCartaNaMao);
+
+                // chama o metodo de realizar jogada
+                realizarJogada(jogadorDaVez, cartaClicada);
+            }
+        } else {
+            // Ignora o clique silenciosamente (ou imprime no log para debug)
+            System.out.println("[CONTROLLER] Clique ignorado: turno atual é do Bot.");
+        }
+    }
+
+
     
     public void mostrarBaralho() {
         System.out.println("[CONTROLLER] Baralho:");

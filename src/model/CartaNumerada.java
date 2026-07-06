@@ -8,13 +8,7 @@ public class CartaNumerada extends Carta{
         super(cor, tipo);
         this.numero = numero;
     }
-    
-    @Override
-    public String aplicarEfeito(){
-
-        return null;
-        
-    }
+   
     
     public int getNumero() {
         return numero;
