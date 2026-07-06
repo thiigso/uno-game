@@ -2,25 +2,27 @@ package model;
 
 import java.util.ArrayList;
 
+
+
 public class Mesa {
 
     private Baralho baralho;
     private int turnoAtual;
-    private String corAtual;
+    private Carta cartaAtual;
     private int penalidadeCompra; //se alguém tiver um nome melhor pra isso, é basicamente jogar come 2 em cima de outro
     private ArrayList<Jogador> jogadores;
     private ArrayList<Carta> pilhaDescarte; //ultima carta dessa lista é a carta do topo da pilha na mesa
     private boolean sentidoHorario;
 
+
     public Mesa() {
         this.baralho = new Baralho();
         this.turnoAtual = 0;
-        this.corAtual = "NAO INICIADA"; //ainda n comecou o jogo, quando for iniciar q vai pegar alguma carta da pilha
+        this.cartaAtual = null;
         this.penalidadeCompra = 0;
         this.jogadores = new ArrayList<>(); //que não seja uma carta especial para ter uma cor e número inicial
         this.pilhaDescarte = new ArrayList<>();
         this.sentidoHorario = true;
-
     }
 
     public void prepararMesa(){
@@ -31,14 +33,42 @@ public class Mesa {
         // Embaralha o baralho
         baralho.embaralhar();
 
+        //mostrarBaralhoMesa();
+
         // Distribui cartas para os jogadores
         distribuiCartasAosJogadores();
 
+        //mostrarBaralhoMesa();
+
         // Coloca a primeira carta na pilha de descarte
         pegarPrimeiraCartaPraIniciar();
+
+        mostrarPilhaDescarte();
+        mostrarBaralhoMesa();
         
         // Após devolver as cartas que eram invalidas para o baralho precisamos embaralhar novamente
-        baralho.embaralhar();       
+        //baralho.embaralhar();    
+        // Eu acho que aqui não precisa embaralhar novamente, se pensarmos no jogo real as cartas invalidas só são devolvidas pro final e o jogo começa
+    }
+
+
+    public void avancarTurno(){
+        if(sentidoHorario){
+            this.turnoAtual = (turnoAtual + 1) % jogadores.size();
+        }else{
+            this.turnoAtual = (turnoAtual - 1 + jogadores.size()) % jogadores.size();
+        }
+    }
+
+    public boolean verificarJogada(Carta cartaJogada){
+        
+        if(cartaJogada.getCor().equals(cartaAtual.getCor()) || cartaJogada.getTipo().equals(cartaAtual.getTipo())){
+                System.out.println("[MESA] Jogada válida! Carta jogada: " + cartaJogada.getCor() + " " + cartaJogada.getTipo());
+                return true;
+            } else {
+                System.out.println("[MESA] Jogada inválida! Carta jogada: " + cartaJogada.getCor() + " " + cartaJogada.getTipo());
+                return false;
+            }
     }
 
     private void instanciarJogadores(){
@@ -67,21 +97,56 @@ public class Mesa {
         ArrayList<Carta> cartasInvalidasParaInicio = new ArrayList<>(); 
         do{
             Carta primeiraCarta = baralho.comprar();
+            if(primeiraCarta == null) {
+                System.out.println("[MESA] Baralho vazio ao tentar iniciar partida.");
+                break;
+            }
             if(primeiraCarta instanceof CartaNumerada){
                 cartaValidaPraInicio = true;
+                this.cartaAtual = primeiraCarta;
                 this.pilhaDescarte.add(primeiraCarta);
-                this.corAtual = primeiraCarta.getCor();
-            }else{
+                System.out.println("[MESA] Primeira carta da partida: " + cartaAtual.getCor() + " " + cartaAtual.getTipo() + " " + ((CartaNumerada) cartaAtual).getNumero());
+            } else if (primeiraCarta instanceof CartaEspecial){
+                System.out.println("[MESA] Encontrou carta invalida!!: " + primeiraCarta.getCor() + " " + primeiraCarta.getTipo() + " " + ((CartaEspecial) primeiraCarta).getEfeito());
+                cartasInvalidasParaInicio.add(primeiraCarta);
+            } else {
+                System.out.println("[MESA] Carta desconhecida encontrada no início: " + primeiraCarta.getCor() + " " + primeiraCarta.getTipo());
                 cartasInvalidasParaInicio.add(primeiraCarta);
             }
         }while(!cartaValidaPraInicio);
         
-        //agr que já foi encontrada uma carta válida pra começar temos que devolver as invalidas ao baralho
+        //Agora que já foi encontrada uma carta válida pra começar temos que devolver as invalidas ao baralho
         while(!cartasInvalidasParaInicio.isEmpty()){
             this.baralho.adicionarCarta(cartasInvalidasParaInicio.getFirst());
             cartasInvalidasParaInicio.removeFirst();
         }
     }
+
+
+    public void mostrarBaralhoMesa() {
+        System.out.println("[MESA] Baralho:");
+        for(int i = baralho.getCartas().size() - 1; i >= 0; i--) {
+            switch (baralho.getCartas().get(i)) {
+                case model.CartaNumerada cartaNumerada -> System.out.println("Carta "+ (i+1) + " " + baralho.getCartas().get(i).getCor() + " " + baralho.getCartas().get(i).getTipo() + " " + cartaNumerada.getNumero());
+                case model.CartaEspecial cartaEspecial -> System.out.println("Carta "+ (i+1) + " " + baralho.getCartas().get(i).getCor() + " " + baralho.getCartas().get(i).getTipo() +" " + cartaEspecial.getEfeito());
+                default -> {
+                }
+            }
+        }
+    }
+
+    public void mostrarPilhaDescarte() {
+        System.out.println("[MESA] Pilha Descarte:");
+        for(int i = pilhaDescarte.size() - 1; i >= 0; i--) {
+            switch (baralho.getCartas().get(i)) {
+                case model.CartaNumerada cartaNumerada -> System.out.println("Carta "+ (i+1) + " " + pilhaDescarte.get(i).getCor() + " " + pilhaDescarte.get(i).getTipo() + " " + cartaNumerada.getNumero());
+                case model.CartaEspecial cartaEspecial -> System.out.println("Carta "+ (i+1) + " " + pilhaDescarte.get(i).getCor() + " " + pilhaDescarte.get(i).getTipo() +" " + cartaEspecial.getEfeito());
+                default -> {
+                }
+            }
+        }
+    }
+
     
     public Baralho getBaralho() {
         return baralho;
@@ -124,11 +189,27 @@ public class Mesa {
         this.sentidoHorario = !(this.sentidoHorario);
     }
 
-    public Carta getCartaDoTopo(){
-        if(this.pilhaDescarte.isEmpty()){
-            return null;
-        }
-        return this.pilhaDescarte.get(pilhaDescarte.size() - 1);
+    public Carta getCartaAtual() {
+        return cartaAtual;
     }
+
+    public void setCartaAtual(Carta cartaAtual) {
+        this.cartaAtual = cartaAtual;
+    }
+
+    public int getPenalidadeCompra() {
+        return penalidadeCompra;
+    }
+
+    public void setPenalidadeCompra(int penalidadeCompra) {
+        this.penalidadeCompra = penalidadeCompra;
+    }
+
+    public void setSentidoHorario(boolean sentidoHorario) {
+        this.sentidoHorario = sentidoHorario;
+    }
+
+    
+    
 
 }
