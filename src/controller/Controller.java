@@ -16,6 +16,7 @@ public class Controller {
     public Controller() {
         this.janela = new Janela();
         this.mesa = new Mesa();
+        this.janela.setController(this);
         
     }
 
@@ -27,10 +28,17 @@ public class Controller {
             
             System.out.println("[CONTROLLER] Baralho pronto! Abrindo a interface gráfica...");
             
+            Jogador humano = mesa.getJogadores().get(0);
+            Carta cartaAtualController = mesa.getCartaAtual();
+
             // Forma segura e correta de abrir a Janela
             java.awt.EventQueue.invokeLater(() -> {
-                janela.setVisible(true);
+                        janela.inicializarBotoes(humano.getMao()); // Desenha as 7 cartas do humano
+                        janela.atualizarPilha(cartaAtualController); // Desenha a carta inicial da mesa
+                        janela.setVisible(true); // Mostra a tela
             });
+
+            gerenciarTurno(); // Inicia o loop de turnos
     }
 
 
@@ -69,7 +77,10 @@ public class Controller {
                 }
             }
 
-            //janela.atualizarJanela();
+            janela.atualizarPilha(cartaSelecionada);
+            if (jogador instanceof JogadorHumano) {
+                janela.inicializarBotoes(jogador.getMao());
+            }
 
             if(jogador.getMao().isEmpty()){
                 System.out.println("[CONTROLLER] O jogador " + jogador.getNome() + " venceu a partida!");
@@ -77,6 +88,7 @@ public class Controller {
             }
 
             mesa.avancarTurno();
+            gerenciarTurno(); // Chama o próximo turno
 
         } else {
             System.out.println("[CONTROLLER] Jogada inválida! Carta jogada: " + cartaSelecionada.getCor() + " " + cartaSelecionada.getTipo());
@@ -84,43 +96,40 @@ public class Controller {
     }
 
     public void gerenciarTurno(){
-        Jogador jogadorAtual = mesa.getJogadores().get(mesa.getTurnoAtual());
-        System.out.println("[CONTROLLER] É a vez do jogador: " + jogadorAtual.getNome());
+    Jogador jogadorAtual = mesa.getJogadores().get(mesa.getTurnoAtual());
+    System.out.println("[CONTROLLER] É a vez do jogador: " + jogadorAtual.getNome());
 
-        if (jogadorAtual instanceof JogadorBot jogadorBot) {
-            // Lógica para o bot jogar
-            System.out.println("[CONTROLLER] O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
+    if (jogadorAtual instanceof JogadorBot jogadorBot){
+        // Lógica para o bot jogar
+        System.out.println("[CONTROLLER] O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
 
-            Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa);
-            
-            if(cartaEscolhidaBot != null){
-                realizarJogada(jogadorAtual, cartaEscolhidaBot);
+        Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa);
+
+        if(cartaEscolhidaBot != null){
+            realizarJogada(jogadorAtual, cartaEscolhidaBot);
+        }else{
+            if(mesa.getPenalidadeCompra() > 0){
+                aplicarPenalidadeCompra(jogadorAtual);
             }else{
-                if(mesa.getPenalidadeCompra() > 0){
-                    aplicarPenalidadeCompra(jogadorAtual);
+                System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " não tem cartas válidas e deve comprar uma carta.");
+                Carta cartaComprada = mesa.getBaralho().comprar();
+
+                if(cartaComprada != null){
+                    jogadorAtual.receberCarta(cartaComprada);
+                    System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " comprou: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
                 }else{
-                    System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " não tem cartas válidas para jogar e deve comprar uma carta.");
-                    Carta cartaComprada = mesa.getBaralho().comprar();
-                    
-                    if(cartaComprada != null){
-                        jogadorAtual.receberCarta(cartaComprada);
-                        System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " comprou a carta: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
-                    }else{
-                        System.out.println("[CONTROLLER] O baralho está vazio. O jogador " + jogadorAtual.getNome() + " não pode comprar cartas.");
-                    }
-                    mesa.avancarTurno();
+                    System.out.println("[CONTROLLER] O baralho está vazio.");
                 }
-                
+                mesa.avancarTurno();
             }
-
-        } else {
-            // Lógica para o jogador humano jogar
-            System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " é humano e deve jogar manualmente.");
         }
-
+    }else{
+        // Lógica para o jogador humano jogar
+        System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " é humano e deve jogar manualmente.");
     }
+}
 
-    public void processarCliqueInterface(int indiceDaCartaNaMao) {
+    public void processarCliqueInterface(int indiceDaCartaNaMao){
         // Descobre quem é o jogador da vez
         Jogador jogadorDaVez = mesa.getJogadores().get(mesa.getTurnoAtual());
 

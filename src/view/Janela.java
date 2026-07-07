@@ -20,7 +20,6 @@ public class Janela extends javax.swing.JFrame {
     }
     
    
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -35,30 +34,27 @@ public class Janela extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("carta");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jButton1.setAlignmentY(0.0F);
+        jButton1.setMaximumSize(new java.awt.Dimension(30, 15));
+        jButton1.setMinimumSize(new java.awt.Dimension(30, 15));
 
         jButton2.setText("carta");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("carta");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jButton4.setText("carta");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jButton5.setText("carta");
-        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jButton6.setText("carta");
         jButton6.addActionListener(this::jButton6ActionPerformed);
 
         jButton7.setText("carta");
-        jButton7.addActionListener(this::jButton7ActionPerformed);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
@@ -66,10 +62,7 @@ public class Janela extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/cartaOculta.jpg"))); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/amarelo (4).png"))); // NOI18N
-
-        jLabel5.setText("carta jogada");
-        jLabel5.setName("cartaJogada"); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sprites/Amarelo3.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,17 +80,12 @@ public class Janela extends javax.swing.JFrame {
                         .addGap(361, 361, 361)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(426, 426, 426)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(157, 157, 157)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(18, 18, Short.MAX_VALUE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,7 +97,7 @@ public class Janela extends javax.swing.JFrame {
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addGap(117, 117, 117))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,17 +106,11 @@ public class Janela extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(119, 119, 119)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3))
                     .addComponent(jLabel4))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(153, 153, 153))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(110, 110, 110)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,7 +119,7 @@ public class Janela extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -167,7 +149,7 @@ public class Janela extends javax.swing.JFrame {
             
             java.net.URL imgURL = getClass().getResource("/resources/sprites/" + nomeArqCarta +".png");
             if(imgURL != null){
-                botoes[i].setIcon(new ImageIcon(imgURL));
+                botoes[i].setIcon(redimensionarImagem(imgURL, 70, 100));
             }else{
                 System.out.println("Imagem não encontrada: "+ nomeArqCarta);
             }
@@ -176,8 +158,6 @@ public class Janela extends javax.swing.JFrame {
             
         }
     }
-    
-
     
    
     private void processarCliqueNaCarta(java.awt.event.ActionEvent evt) {
@@ -194,9 +174,35 @@ public class Janela extends javax.swing.JFrame {
         gerenciadorJogo.processarCliqueInterface(indiceCarta);
     }
     
+    //
+    public void atualizarPilha(Carta cartaNoTopo) {
+        String nomeArqCarta = "";
+        
+        if(cartaNoTopo instanceof CartaNumerada cartaNumerada)
+            nomeArqCarta = cartaNoTopo.getCor() + cartaNumerada.getNumero();
+        if(cartaNoTopo instanceof CartaEspecial cartaEspecial)
+            nomeArqCarta = cartaNoTopo.getCor() + cartaEspecial.getEfeito();
+        
+        java.net.URL imgURL = getClass().getResource("/resources/sprites/" + nomeArqCarta + ".png");
+        
+        if(imgURL != null){
+            jLabel4.setIcon(redimensionarImagem(imgURL, 100, 140)); // jLabel4 é a carta da mesa
+        } else {
+            System.out.println("Imagem não encontrada para a mesa: " + nomeArqCarta);
+        }
+    }
     
-    
-    
+    private ImageIcon redimensionarImagem(java.net.URL imgURL, int larguraDesejada, int alturaDesejada) {
+        if (imgURL != null) {
+            ImageIcon iconeOriginal = new ImageIcon(imgURL);
+            // Pega a imagem real de dentro do ícone
+            java.awt.Image imagemReal = iconeOriginal.getImage(); 
+            // Cria uma nova versão redimensionada com a qualidade "SMOOTH" (suave)
+            java.awt.Image imagemRedimensionada = imagemReal.getScaledInstance(larguraDesejada, alturaDesejada, java.awt.Image.SCALE_SMOOTH);
+            return new ImageIcon(imagemRedimensionada);
+        }
+        return null;
+    }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         processarCliqueNaCarta(evt);
@@ -239,6 +245,5 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
