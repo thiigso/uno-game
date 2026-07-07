@@ -62,8 +62,9 @@ public class Mesa {
 
     public boolean verificarJogada(Carta cartaJogada) {//espero que agora funcione como planejadokkk
 
-    // 1. Existe penalidade ativa?
+    // Existe penalidade ativa?
     if (penalidadeCompra > 0) {
+        System.out.println("[MESA] (verificarJogada) Penalidade ativa: " + penalidadeCompra + ". Verificando se a carta " + cartaJogada.getTipo() + cartaJogada.getCor() + " pode responder à penalidade.");
 
         // Apenas cartas especiais podem responder a uma penalidade
         if (!(cartaJogada instanceof CartaEspecial cartaEspecial)) {
