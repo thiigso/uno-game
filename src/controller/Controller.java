@@ -50,8 +50,18 @@ public class Controller {
             mesa.getPilhaDescarte().add(cartaSelecionada);
             mesa.setCartaAtual(cartaSelecionada);
 
-            if (cartaSelecionada instanceof CartaEspecial cartaEspecial) {
-                cartaEspecial.aplicarEfeito();
+            if ((cartaSelecionada instanceof CartaEspecial cartaEspecial) && (mesa.getPenalidadeCompra()==0)){
+
+                switch (cartaEspecial.getEfeito()){
+
+                case "Mais2":
+                    mesa.setPenalidadeCompra(2);
+                break;
+
+                case "Mais4":
+                    mesa.setPenalidadeCompra(4);
+                break;
+                }
             }
 
             janela.atualizarPilha(cartaSelecionada);
