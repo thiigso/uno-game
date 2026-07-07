@@ -1,7 +1,6 @@
 # Jogo de UNO em Java 
 
 [Diagrama UML do Projeto] <img width="1451" height="841" alt="image" src="https://github.com/user-attachments/assets/af24ddc0-f230-4f7d-bd1e-fde5ae1dcdc7" />
-*(Nota: Substitua o caminho acima pelo link ou caminho real da imagem do seu diagrama gerado no Umbrelo)*
 
 ## Sobre o Projeto
 Este é um jogo clássico de UNO desenvolvido inteiramente em **Java**, com interface gráfica construída em **Java Swing**. O projeto foi estruturado utilizando o padrão de arquitetura **MVC (Model-View-Controller)** para garantir uma separação limpa entre as regras de negócio, a interface do utilizador e o controlo do fluxo do jogo.
@@ -13,7 +12,7 @@ O jogo permite que um jogador humano enfrente **3 Bots** controlados pelo sistem
 * **Cartas Especiais:** Implementação funcional das cartas Pular (Bloquear), Inverter Sentido, +2, Coringa (Mudar Cor) e Coringa +4.
 * **Sistema de Penalidades:** Acúmulo de punições (ex: jogar um +2 em cima de um +2).
 * **Inteligência Artificial (Bots):** Os oponentes analisam as próprias mãos, selecionam a melhor jogada baseada na mesa e escolhem a melhor cor ao jogar curingas de forma autônoma.
-* **Interface Gráfica Dinâmica:** A mão do jogador ajusta-se automaticamente independente da quantidade de cartas, utilizando geração dinâmica de botões e redimensionamento de sprites.
+* **Interface Gráfica Dinâmica:** A mão do jogador ajusta-se automaticamente independentemente da quantidade de cartas, utilizando geração dinâmica de botões e redimensionamento de sprites.
 * **Baralho Interativo:** Compra de cartas diretamente clicando no monte do baralho na interface.
 
 ## Arquitetura e Tecnologias
