@@ -43,7 +43,9 @@ public class Controller {
 
 
     public void realizarJogada(Jogador jogador, Carta cartaSelecionada){
+        System.out.println("[CONTROLLER] (realizarJogada) iniciando...");
         if(mesa.verificarJogada(cartaSelecionada)){
+            System.out.println("[CONTROLLER] (realizarJogada) jogada verificada...");
 
             jogador.jogarCarta(cartaSelecionada);
 
@@ -52,15 +54,9 @@ public class Controller {
 
             if ((cartaSelecionada instanceof CartaEspecial cartaEspecial) && (mesa.getPenalidadeCompra()==0)){
 
-                switch (cartaEspecial.getEfeito()){
-
-                case "Mais2":
-                    mesa.setPenalidadeCompra(2);
-                break;
-
-                case "Mais4":
-                    mesa.setPenalidadeCompra(4);
-                break;
+                switch (cartaEspecial.getEfeito()) {
+                    case "Mais2" -> mesa.setPenalidadeCompra(2);
+                    case "Mais4" -> mesa.setPenalidadeCompra(4);
                 }
             }
 
@@ -120,10 +116,11 @@ public class Controller {
     public void processarCliqueInterface(int indiceDaCartaNaMao) {
         // Descobre quem é o jogador da vez
         Jogador jogadorDaVez = mesa.getJogadores().get(mesa.getTurnoAtual());
+        System.out.println("[CONTROLLER] (processarCliqueInterface) Clique recebido na interface para a carta de índice: " + indiceDaCartaNaMao);
 
         // Só aceita o clique se realmente for a vez do humano
         if (jogadorDaVez instanceof JogadorHumano) {
-            System.out.println("[CONTROLLER] Clique recebido na interface para a carta de índice: " + indiceDaCartaNaMao);
+            System.out.println("[CONTROLLER] (processarCliqueInterface) Jogador Humano ");
 
             // Pega a carta específica da mão baseada no índice do botão
             if (indiceDaCartaNaMao >= 0 && indiceDaCartaNaMao < jogadorDaVez.getMao().size()) {
@@ -134,7 +131,7 @@ public class Controller {
             }
         } else {
             // Ignora o clique silenciosamente (ou imprime no log para debug)
-            System.out.println("[CONTROLLER] Clique ignorado: turno atual é do Bot.");
+            System.out.println("[CONTROLLER] (processarCliqueInterface) Clique ignorado: turno atual é do Bot.");
         }
     }
 
