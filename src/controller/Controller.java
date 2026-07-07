@@ -41,18 +41,31 @@ public class Controller {
 
             mesa.getPilhaDescarte().add(cartaSelecionada);
             mesa.setCartaAtual(cartaSelecionada);
+            
+            if(cartaSelecionada instanceof CartaEspecial cartaEspecial){
+                switch(((CartaEspecial) cartaSelecionada).getEfeito()){ //downcast para  CartaEspecial
+                    case "Mais2":
+                        mesa.setPenalidadeCompra(mesa.getPenalidadeCompra() + 2);
+                        break;
 
-            if ((cartaSelecionada instanceof CartaEspecial cartaEspecial) && (mesa.getPenalidadeCompra()==0)){
-
-                switch (cartaEspecial.getEfeito()){
-
-                case "Mais2":
-                    mesa.setPenalidadeCompra(2);
-                break;
-
-                case "Mais4":
-                    mesa.setPenalidadeCompra(4);
-                break;
+                    case "Mais4":
+                        mesa.setPenalidadeCompra(mesa.getPenalidadeCompra() + 4);
+                        //AINDA FALTA ADICIONAR LOGICA DE ESCOLHER COR
+                        break;
+                        
+                    case "Bloquear":
+                        System.out.println("[EFEITO] Pula a vez do proximo!");
+                        mesa.avancarTurno();
+                        break;
+                    
+                    case "MudaSentido":
+                        System.out.println("[EFEITO] Inverte o sentido do jogo!");
+                        mesa.inverteSentido();
+                        break;
+                        
+                    case "MudarCor":
+                        //AINDA FALTA ADICIONAR LOGICA DE ESCOLHER COR
+                        break;       
                 }
             }
 
@@ -70,7 +83,6 @@ public class Controller {
         }
     }
 
-
     public void gerenciarTurno(){
         Jogador jogadorAtual = mesa.getJogadores().get(mesa.getTurnoAtual());
         System.out.println("[CONTROLLER] É a vez do jogador: " + jogadorAtual.getNome());
@@ -79,19 +91,26 @@ public class Controller {
             // Lógica para o bot jogar
             System.out.println("[CONTROLLER] O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
 
-            Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa.getCartaAtual());
+            Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa);
             
             if(cartaEscolhidaBot != null){
                 realizarJogada(jogadorAtual, cartaEscolhidaBot);
-            } else {
-                System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " não tem cartas válidas para jogar e deve comprar uma carta.");
-                Carta cartaComprada = mesa.getBaralho().comprar();
-                if(cartaComprada != null){
-                    jogadorAtual.receberCarta(cartaComprada);
-                    System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " comprou a carta: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
-                } else {
-                    System.out.println("[CONTROLLER] O baralho está vazio. O jogador " + jogadorAtual.getNome() + " não pode comprar cartas.");
+            }else{
+                if(mesa.getPenalidadeCompra() > 0){
+                    aplicarPenalidadeCompra(jogadorAtual);
+                }else{
+                    System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " não tem cartas válidas para jogar e deve comprar uma carta.");
+                    Carta cartaComprada = mesa.getBaralho().comprar();
+                    
+                    if(cartaComprada != null){
+                        jogadorAtual.receberCarta(cartaComprada);
+                        System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " comprou a carta: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
+                    }else{
+                        System.out.println("[CONTROLLER] O baralho está vazio. O jogador " + jogadorAtual.getNome() + " não pode comprar cartas.");
+                    }
+                    mesa.avancarTurno();
                 }
+                
             }
 
         } else {
@@ -152,21 +171,34 @@ public class Controller {
 
     }
 
+    public void aplicarPenalidadeCompra(Jogador jogadorAzarado){
+        int cartasParaComprar = mesa.getPenalidadeCompra();
+        
+        if(mesa.getPenalidadeCompra() > 0){
+            System.out.println("[PENALIDADE] " + jogadorAzarado.getNome() + " não tem defesa e vai comer " 
+                    + cartasParaComprar + " cartas!");
+            for(int i = 0; i < cartasParaComprar; i++){
+                Carta cartaComprada = mesa.getBaralho().comprar();
+                if(cartaComprada != null){
+                    jogadorAzarado.receberCarta(cartaComprada);
+                }
+            }
+            mesa.setPenalidadeCompra(0);//agr q alguem teve q comer reseta a contagem
+            mesa.avancarTurno();//pula o turno de quem teve q comer
+        }
+    }
 
     public Janela getJanela() {
         return janela;
     }
 
-
     public void setJanela(Janela janela) {
         this.janela = janela;
     }
 
-
     public Mesa getMesa() {
         return mesa;
     }
-
 
     public void setMesa(Mesa mesa) {
         this.mesa = mesa;
