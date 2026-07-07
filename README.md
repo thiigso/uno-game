@@ -1,6 +1,6 @@
 # Jogo de UNO em Java 
 
-![Diagrama UML do Projeto]<img width="1451" height="841" alt="image" src="https://github.com/user-attachments/assets/af24ddc0-f230-4f7d-bd1e-fde5ae1dcdc7" />
+[Diagrama UML do Projeto] <img width="1451" height="841" alt="image" src="https://github.com/user-attachments/assets/af24ddc0-f230-4f7d-bd1e-fde5ae1dcdc7" />
 *(Nota: Substitua o caminho acima pelo link ou caminho real da imagem do seu diagrama gerado no Umbrelo)*
 
 ## Sobre o Projeto
