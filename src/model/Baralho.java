@@ -46,16 +46,14 @@ public class Baralho {
 
     }
     
-    /*
-    Para a implementação desse método, optou-se pelas boas prática de reutilização de código robusto,
+    /**
+     *     Para a implementação desse método, optou-se pelas boas prática de reutilização de código robusto,
     utilizando o método nativo de java.util.Collections, o método shuffle(java.util.List).
     Portanto evitamos a criação manual de um algoritmo de sorteio para aproveitar a solução interna do Java,
     que implementa o algoritmo conhecido como Embaralhamento de Knuth. Essa abordagem garante um tempo otimizado
     e assegura um embaralhamento imparcial onde todas as permutações possíveis do baralho têm exatamente a mesma
     probabilidade de ocorrência.
-    */
-
-    
+     */
     public void embaralhar(){
         Collections.shuffle(cartas);
     }

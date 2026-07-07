@@ -9,6 +9,7 @@ public class Mesa {
     private Baralho baralho;
     private int turnoAtual;
     private Carta cartaAtual;
+    private String corAtual; //cor atual da carta que está na mesa, se for uma carta especial preta, a cor atual é a cor escolhida pelo jogador
     private int penalidadeCompra; //se alguém tiver um nome melhor pra isso, é basicamente jogar come 2 em cima de outro
     private ArrayList<Jogador> jogadores;
     private ArrayList<Carta> pilhaDescarte; //ultima carta dessa lista é a carta do topo da pilha na mesa
@@ -19,6 +20,7 @@ public class Mesa {
         this.baralho = new Baralho();
         this.turnoAtual = 0;
         this.cartaAtual = null;
+        this.corAtual = "NAO INCIADA"; //inicialmente a cor da carta na mesa é indefinida, só será definida quando a primeira carta for jogada
         this.penalidadeCompra = 0;
         this.jogadores = new ArrayList<>(); //que não seja uma carta especial para ter uma cor e número inicial
         this.pilhaDescarte = new ArrayList<>();
@@ -43,12 +45,9 @@ public class Mesa {
         // Coloca a primeira carta na pilha de descarte
         pegarPrimeiraCartaPraIniciar();
 
-        mostrarPilhaDescarte();
-        mostrarBaralhoMesa();
-        
-        // Após devolver as cartas que eram invalidas para o baralho precisamos embaralhar novamente
-        //baralho.embaralhar();    
-        // Eu acho que aqui não precisa embaralhar novamente, se pensarmos no jogo real as cartas invalidas só são devolvidas pro final e o jogo começa
+        //mostrarPilhaDescarte();
+        //mostrarBaralhoMesa();
+
     }
 
 
@@ -60,75 +59,61 @@ public class Mesa {
         }
     }
 
-    public boolean verificarJogada(Carta cartaJogada) {//espero que agora funcione como planejadokkk
+    public boolean verificarJogada(Carta cartaJogada) {
 
-    // 1. Existe penalidade ativa?
-    if (penalidadeCompra > 0) {
+        // 1. Existe penalidade ativa?
+        if (penalidadeCompra > 0) {
+            System.out.println("[MESA] (verificarJogada) Penalidade ativa: " + penalidadeCompra + ". Verificando se a carta pode responder à penalidade.");
 
-        // Apenas cartas especiais podem responder a uma penalidade
-        if (!(cartaJogada instanceof CartaEspecial cartaEspecial)) {
+            // Apenas cartas especiais podem responder a uma penalidade
+            if (!(cartaJogada instanceof CartaEspecial cartaEspecial)) {
+                return false;
+            }
+
+            String efeito = cartaEspecial.getEfeito();
+
+            // Carta da mesa é +2
+            if (cartaAtual instanceof CartaEspecial cartaAtualEspecial &&
+                cartaAtualEspecial.getEfeito().equals("Mais2")) {
+                
+                // Retiramos o "penalidadeCompra += 2" daqui!
+                return efeito.equals("Mais2") || efeito.equals("Mais4");
+            }
+
+            // Carta da mesa é +4
+            if (cartaAtual instanceof CartaEspecial cartaAtualEspecial &&
+                cartaAtualEspecial.getEfeito().equals("Mais4")) {
+
+                // Retiramos o "penalidadeCompra += 4" daqui!
+                return efeito.equals("Mais4");
+            }
             return false;
         }
 
-        String efeito = cartaEspecial.getEfeito();
+        // 2. Sem penalidade: verifica regras normais
 
-        // Carta da mesa é +2
-        if (cartaAtual instanceof CartaEspecial cartaAtualEspecial &&
-            cartaAtualEspecial.getEfeito().equals("Mais2")) {
+        // mesma cor
+        if (cartaJogada.getCor().equals(cartaAtual.getCor()))
+            return true;
 
-            if (efeito.equals("Mais2")) {
-                penalidadeCompra += 2;
-                return true;
-            }
-
-            if (efeito.equals("Mais4")) {
-                penalidadeCompra += 4;
-                return true;
-            }
-
-            return false;
+        // duas cartas numéricas
+        if (cartaJogada instanceof CartaNumerada jogada &&
+            cartaAtual instanceof CartaNumerada atual){
+            return jogada.getNumero() == atual.getNumero();
         }
 
-        // Carta da mesa é +4
-        if (cartaAtual instanceof CartaEspecial cartaAtualEspecial &&
-            cartaAtualEspecial.getEfeito().equals("Mais4")) {
-
-            // Apenas outro +4 pode responder
-            if (efeito.equals("Mais4")) {
-                penalidadeCompra += 4;
-                return true;
-            }
-
-            return false;
+        // duas cartas especiais
+        if (cartaJogada instanceof CartaEspecial jogada &&
+            cartaAtual instanceof CartaEspecial atual){
+            return jogada.getEfeito().equals(atual.getEfeito());
         }
-    }
 
-    // 2. Sem penalidade: verifica regras normais
+        // +4 e MudarCor sempre podem ser jogados
+        if (cartaJogada instanceof CartaEspecial jogada){
+            return jogada.getEfeito().equals("Mais4") || jogada.getEfeito().equals("MudarCor");
+        }
 
-    // mesma cor
-    if (cartaJogada.getCor().equals(cartaAtual.getCor()))
-        return true;
-
-    // duas cartas numéricas
-    if (cartaJogada instanceof CartaNumerada jogada &&
-        cartaAtual instanceof CartaNumerada atual){
-
-        return jogada.getNumero() == atual.getNumero();
-    }
-
-    // duas cartas especiais
-    if (cartaJogada instanceof CartaEspecial jogada &&
-        cartaAtual instanceof CartaEspecial atual){
-
-        return jogada.getEfeito().equals(atual.getEfeito());
-    }
-
-    // +4 e MudarCor sempre podem ser jogados
-    if (cartaJogada instanceof CartaEspecial jogada){
-        return jogada.getEfeito().equals("Mais4") || jogada.getEfeito().equals("MudarCor");
-    }
-
-    return false;
+        return false;
     }
 
     private void instanciarJogadores(){
