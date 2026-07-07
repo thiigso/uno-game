@@ -9,6 +9,7 @@ public class Mesa {
     private Baralho baralho;
     private int turnoAtual;
     private Carta cartaAtual;
+    private String corAtual; //cor atual da carta que está na mesa, se for uma carta especial preta, a cor atual é a cor escolhida pelo jogador
     private int penalidadeCompra; //se alguém tiver um nome melhor pra isso, é basicamente jogar come 2 em cima de outro
     private ArrayList<Jogador> jogadores;
     private ArrayList<Carta> pilhaDescarte; //ultima carta dessa lista é a carta do topo da pilha na mesa
@@ -19,6 +20,7 @@ public class Mesa {
         this.baralho = new Baralho();
         this.turnoAtual = 0;
         this.cartaAtual = null;
+        this.corAtual = "NAO INCIADA"; //inicialmente a cor da carta na mesa é indefinida, só será definida quando a primeira carta for jogada
         this.penalidadeCompra = 0;
         this.jogadores = new ArrayList<>(); //que não seja uma carta especial para ter uma cor e número inicial
         this.pilhaDescarte = new ArrayList<>();
@@ -43,12 +45,9 @@ public class Mesa {
         // Coloca a primeira carta na pilha de descarte
         pegarPrimeiraCartaPraIniciar();
 
-        mostrarPilhaDescarte();
-        mostrarBaralhoMesa();
-        
-        // Após devolver as cartas que eram invalidas para o baralho precisamos embaralhar novamente
-        //baralho.embaralhar();    
-        // Eu acho que aqui não precisa embaralhar novamente, se pensarmos no jogo real as cartas invalidas só são devolvidas pro final e o jogo começa
+        //mostrarPilhaDescarte();
+        //mostrarBaralhoMesa();
+
     }
 
 
@@ -60,7 +59,7 @@ public class Mesa {
         }
     }
 
-public boolean verificarJogada(Carta cartaJogada) {
+    public boolean verificarJogada(Carta cartaJogada) {
 
         // 1. Existe penalidade ativa?
         if (penalidadeCompra > 0) {

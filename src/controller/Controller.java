@@ -126,7 +126,7 @@ public class Controller {
         System.out.println("[CONTROLLER] (gerenciarTurno) O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
 
         Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa);
-        System.out.println("[CONTROLLER] (gerenciarTurno) O bot " + jogadorBot.getNome() + " escolheu a carta: " + (cartaEscolhidaBot != null ? cartaEscolhidaBot.getCor() + " " + cartaEscolhidaBot.getTipo() + "" + ((CartaEspecial) cartaEscolhidaBot).getEfeito() : "Nenhuma carta válida"));
+        System.out.println("[CONTROLLER] (gerenciarTurno) O bot " + jogadorBot.getNome() + " escolheu a carta: " + (cartaEscolhidaBot != null ? cartaEscolhidaBot.getCor() + " " + cartaEscolhidaBot.getTipo(): "Nenhuma carta válida"));
 
         if(cartaEscolhidaBot != null){
             realizarJogada(jogadorAtual, cartaEscolhidaBot);
