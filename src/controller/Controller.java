@@ -113,6 +113,7 @@ public class Controller {
 
         // Só aceita o clique se realmente for a vez do humano
         if (jogadorDaVez instanceof JogadorHumano) {
+            System.out.println("[CONTROLLER] Clique recebido na interface para a carta de índice: " + indiceDaCartaNaMao);
 
             // Pega a carta específica da mão baseada no índice do botão
             if (indiceDaCartaNaMao >= 0 && indiceDaCartaNaMao < jogadorDaVez.getMao().size()) {

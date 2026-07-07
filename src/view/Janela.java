@@ -164,6 +164,8 @@ public class Janela extends javax.swing.JFrame {
         JButton botaoClicado = (JButton) evt.getSource();
         String indiceString = botaoClicado.getActionCommand();
 
+        System.out.println("[VIEW] Clique recebido na interface para a carta de índice: " + indiceString);
+
         if (indiceString == null || indiceString.isEmpty()) {
             return; 
         }
