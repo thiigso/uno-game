@@ -58,19 +58,38 @@ public class Controller {
                     case "Mais2" -> mesa.setPenalidadeCompra(mesa.getPenalidadeCompra() + 2);
                     case "Mais4" -> {
                         mesa.setPenalidadeCompra(mesa.getPenalidadeCompra() + 4);
-                        //AINDA FALTA ADICIONAR LOGICA DE ESCOLHER COR
-                    }
-                    case "Bloquear" -> {
+                        String novaCor;
+                        if(jogador instanceof JogadorBot bot){
+                        //aq o bot escolhe a melhor cor usando a lógica dele
+                        novaCor = bot.escolherMelhorCor(); 
+                        }else{
+                        //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
+                        novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
+                        System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
+                        }           
+                        mesa.getCartaAtual().setCor(novaCor);
+                        break;
+                        
+                    case "Bloquear":
                         System.out.println("[EFEITO] Pula a vez do proximo!");
                         mesa.avancarTurno();
                     }
                     case "MudaSentido" -> {
                         System.out.println("[EFEITO] Inverte o sentido do jogo!");
                         mesa.inverteSentido();
-                    }
-                    case "MudarCor" -> {
-                        //AINDA FALTA ADICIONAR LOGICA DE ESCOLHER COR
-                    }
+                        break;
+                        
+                    case "MudarCor":
+                        if(jogador instanceof JogadorBot bot){
+                        //aq o bot escolhe a melhor cor usando a lógica dele
+                        novaCor = bot.escolherMelhorCor(); 
+                        }else{
+                        //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
+                        novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
+                        System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
+                        }           
+                        mesa.getCartaAtual().setCor(novaCor);
+                        break;       
                 }
             }
 
