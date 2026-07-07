@@ -58,7 +58,16 @@ public class Controller {
 
                     case "Mais4":
                         mesa.setPenalidadeCompra(mesa.getPenalidadeCompra() + 4);
-                        //AINDA FALTA ADICIONAR LOGICA DE ESCOLHER COR
+                        String novaCor;
+                        if(jogador instanceof JogadorBot bot){
+                        //aq o bot escolhe a melhor cor usando a lógica dele
+                        novaCor = bot.escolherMelhorCor(); 
+                        }else{
+                        //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
+                        novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
+                        System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
+                        }           
+                        mesa.getCartaAtual().setCor(novaCor);
                         break;
                         
                     case "Bloquear":
@@ -72,7 +81,15 @@ public class Controller {
                         break;
                         
                     case "MudarCor":
-                        //AINDA FALTA ADICIONAR LOGICA DE ESCOLHER COR
+                        if(jogador instanceof JogadorBot bot){
+                        //aq o bot escolhe a melhor cor usando a lógica dele
+                        novaCor = bot.escolherMelhorCor(); 
+                        }else{
+                        //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
+                        novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
+                        System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
+                        }           
+                        mesa.getCartaAtual().setCor(novaCor);
                         break;       
                 }
             }
