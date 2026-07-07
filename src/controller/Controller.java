@@ -60,36 +60,42 @@ public class Controller {
                         mesa.setPenalidadeCompra(mesa.getPenalidadeCompra() + 4);
                         String novaCor;
                         if(jogador instanceof JogadorBot bot){
-                        //aq o bot escolhe a melhor cor usando a lógica dele
-                        novaCor = bot.escolherMelhorCor(); 
+                            //aq o bot escolhe a melhor cor usando a lógica dele
+                            novaCor = bot.escolherMelhorCor(); 
                         }else{
-                        //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
-                        novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
-                        System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
+                            // Pop-up visual para o humano escolher a cor
+                            String[] opcoes = {"Amarelo", "Azul", "Verde", "Vermelho"};
+                            int escolha = javax.swing.JOptionPane.showOptionDialog(null, 
+                                "Escolha a nova cor do jogo:", "Mudar Cor",
+                                javax.swing.JOptionPane.DEFAULT_OPTION, 
+                                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                                null, opcoes, opcoes[0]);
+                            
+                            novaCor = (escolha >= 0) ? opcoes[escolha] : "Azul";
+                            System.out.println("[CONTROLLER] Jogador humano escolheu " + novaCor);
                         }           
                         mesa.getCartaAtual().setCor(novaCor);
-                        break;
-                        
-                    case "Bloquear":
+                    }
+                    case "Bloquear" -> {
                         System.out.println("[EFEITO] Pula a vez do proximo!");
                         mesa.avancarTurno();
                     }
                     case "MudaSentido" -> {
                         System.out.println("[EFEITO] Inverte o sentido do jogo!");
                         mesa.inverteSentido();
-                        break;
-                        
-                    case "MudarCor":
+                    }
+                    case "MudarCor" -> {
+                        String novaCor;
                         if(jogador instanceof JogadorBot bot){
-                        //aq o bot escolhe a melhor cor usando a lógica dele
-                        novaCor = bot.escolherMelhorCor(); 
+                            //aq o bot escolhe a melhor cor usando a lógica dele
+                            novaCor = bot.escolherMelhorCor(); 
                         }else{
-                        //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
-                        novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
-                        System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
+                            //para o humano (EU NÃO SEI FAZER), por isso por enquanto:
+                            novaCor = "Azul"; // vc pode trocar por uma lógica de input se quiser
+                            System.out.println("[CONTROLLER] Jogador humano escolheu Azul."); //é só um mockup por enquanto
                         }           
                         mesa.getCartaAtual().setCor(novaCor);
-                        break;       
+                    }
                 }
             }
 
@@ -113,13 +119,14 @@ public class Controller {
 
     public void gerenciarTurno(){
     Jogador jogadorAtual = mesa.getJogadores().get(mesa.getTurnoAtual());
-    System.out.println("[CONTROLLER] É a vez do jogador: " + jogadorAtual.getNome());
+    System.out.println("[CONTROLLER] (gerenciarTurno) É a vez do jogador: " + jogadorAtual.getNome());
 
     if (jogadorAtual instanceof JogadorBot jogadorBot){
         // Lógica para o bot jogar
-        System.out.println("[CONTROLLER] O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
+        System.out.println("[CONTROLLER] (gerenciarTurno) O jogador " + jogadorBot.getNome() + " é um bot e está jogando automaticamente.");
 
         Carta cartaEscolhidaBot = jogadorBot.escolherCartaParaJogar(mesa);
+        System.out.println("[CONTROLLER] (gerenciarTurno) O bot " + jogadorBot.getNome() + " escolheu a carta: " + (cartaEscolhidaBot != null ? cartaEscolhidaBot.getCor() + " " + cartaEscolhidaBot.getTipo(): "Nenhuma carta válida"));
 
         if(cartaEscolhidaBot != null){
             realizarJogada(jogadorAtual, cartaEscolhidaBot);
@@ -132,11 +139,14 @@ public class Controller {
 
                 if(cartaComprada != null){
                     jogadorAtual.receberCarta(cartaComprada);
-                    System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " comprou: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
+                    System.out.println("[CONTROLLER] (gerenciarTurno) O jogador " + jogadorAtual.getNome() + " comprou: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
                 }else{
-                    System.out.println("[CONTROLLER] O baralho está vazio.");
+                    System.out.println("[CONTROLLER] (gerenciarTurno) O baralho está vazio.");
                 }
+                System.out.println("[CONTROLLER] (gerenciarTurno) O jogador " + jogadorAtual.getNome() + " não tem cartas válidas e não há penalidade, então o turno passa para o próximo jogador.");
                 mesa.avancarTurno();
+                gerenciarTurno(); // Chama o próximo turno
+
             }
         }
     }else{
@@ -144,6 +154,33 @@ public class Controller {
         System.out.println("[CONTROLLER] O jogador " + jogadorAtual.getNome() + " é humano e deve jogar manualmente.");
     }
 }
+
+
+    public void pedirParaComprarCarta() {
+            Jogador jogadorDaVez = mesa.getJogadores().get(mesa.getTurnoAtual());
+            
+            // Garante que só executa se for o humano apertando o botão
+            if (jogadorDaVez instanceof JogadorHumano) {
+                
+                // Se tiver +2 ou +4 na mesa, ele é obrigado a comer as cartas de penalidade
+                if (mesa.getPenalidadeCompra() > 0) {
+                    aplicarPenalidadeCompra(jogadorDaVez);
+                } else {
+                    // Compra apenas uma carta normal
+                    Carta cartaComprada = mesa.getBaralho().comprar();
+                    if (cartaComprada != null) {
+                        jogadorDaVez.receberCarta(cartaComprada);
+                        System.out.println("[CONTROLLER] O Humano comprou uma carta.");
+                        janela.inicializarBotoes(jogadorDaVez.getMao()); // Atualiza a tela
+                        
+                        // Opcional: A regra oficial do Uno permite que você jogue a carta se ela servir.
+                        // Para simplificar agora, vamos apenas passar a vez depois de comprar.
+                        mesa.avancarTurno();
+                        gerenciarTurno();
+                    }
+                }
+            }
+    }
 
     public void processarCliqueInterface(int indiceDaCartaNaMao){
         // Descobre quem é o jogador da vez
@@ -199,19 +236,22 @@ public class Controller {
     }
 
     public void aplicarPenalidadeCompra(Jogador jogadorAzarado){
+        System.out.println("[CONTROLLER] (aplicarPenalidadeCompra) O jogador " + jogadorAzarado.getNome() + " tem uma penalidade de compra ativa de " + mesa.getPenalidadeCompra() + " cartas.");
         int cartasParaComprar = mesa.getPenalidadeCompra();
         
         if(mesa.getPenalidadeCompra() > 0){
-            System.out.println("[PENALIDADE] " + jogadorAzarado.getNome() + " não tem defesa e vai comer " 
+            System.out.println("[CONTROLLER] (aplicarPenalidadeCompra) " + jogadorAzarado.getNome() + " não tem defesa e vai comer " 
                     + cartasParaComprar + " cartas!");
             for(int i = 0; i < cartasParaComprar; i++){
                 Carta cartaComprada = mesa.getBaralho().comprar();
                 if(cartaComprada != null){
                     jogadorAzarado.receberCarta(cartaComprada);
+                    System.out.println("[CONTROLLER] (aplicarPenalidadeCompra) " + jogadorAzarado.getNome() + " comprou: " + cartaComprada.getCor() + " " + cartaComprada.getTipo());
                 }
             }
             mesa.setPenalidadeCompra(0);//agr q alguem teve q comer reseta a contagem
             mesa.avancarTurno();//pula o turno de quem teve q comer
+            gerenciarTurno(); // Chama o próximo turno
         }
     }
 
